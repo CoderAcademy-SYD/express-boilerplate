@@ -4,8 +4,22 @@ function loginForm(req, res) {
     res.render("authentication/login_form");
 }
 
-function loginVerify(req, res) {
-    
+async function loginVerify(req, res) {
+    const { email, password } = req.body;
+    const user = await UserModel.findOne({ email });
+
+    if (!user) {
+        return res.redirect("/login");
+    }
+
+    const valid = await user.verifyPassword(password);
+
+    if (!valid) {
+        return res.redirect("/login");
+    }
+
+    req.session.user = user;
+    res.redirect("/dashboard");
 }
 
 function make(req, res) {
