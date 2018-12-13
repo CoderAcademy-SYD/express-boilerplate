@@ -26,16 +26,21 @@ function make(req, res) {
     res.render("authentication/make");
 }
 
-async function create(req, res) {
+async function create(req, res, next) {
     const user = await UserModel.create(req.body);
-    req.session.user = user;
-    res.redirect("/dashboard");
+    
+    req.login(user, (err) => {
+        if (err) {
+            return next(err);
+        }
+
+        res.redirect("/dashboard");
+    });
 }
 
 function logout(req, res) {
-    req.session.destroy(() => {
-        res.redirect("/");
-    });
+    req.logout();
+    res.redirect("/");
 }
 
 module.exports = {

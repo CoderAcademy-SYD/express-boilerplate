@@ -4,7 +4,7 @@ function index(req, res) {
 }
 
 function dashboard(req ,res) {
-    res.json(req.session.user);
+    res.json(req.user);
 }
 
 module.exports = {
