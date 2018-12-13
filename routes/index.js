@@ -36,4 +36,13 @@ router.get("/logout", AuthenticationController.logout);
 
 router.get("/dashboard", passport.authenticate('jwt', {session: false}), PageController.dashboard);
 
+router.get("/oauth/google", passport.authenticate('google', {
+    scope: ['profile', 'email']
+}))
+
+router.get("/oauth/google/callback", passport.authenticate('google', {
+    failureRedirect: "/login",
+    session: false
+}), AuthenticationController.generateJWT);
+
 module.exports = router;

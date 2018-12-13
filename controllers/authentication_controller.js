@@ -29,14 +29,9 @@ function make(req, res) {
 
 async function create(req, res, next) {
     const user = await UserModel.create(req.body);
-    
-    req.login(user, (err) => {
-        if (err) {
-            return next(err);
-        }
-
-        res.redirect("/dashboard");
-    });
+    const token = jwt.sign({ sub: user._id }, process.env.JWT_SECRET);
+    res.cookie("jwt", token);
+    res.redirect("/dashboard");
 }
 
 function logout(req, res) {
