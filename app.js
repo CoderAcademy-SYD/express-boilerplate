@@ -7,6 +7,7 @@ const expressSession = require("express-session");
 const MongoStore = require("connect-mongo")(expressSession);
 const mongoose = require("mongoose");
 const passport = require("passport");
+const cookieParser = require("cookie-parser");
 const app = express();
 
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -24,6 +25,7 @@ app.use(expressSession({
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
+app.use(cookieParser());
 
 require("./config/passport");
 app.use(passport.initialize());

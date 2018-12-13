@@ -1,4 +1,5 @@
 const UserModel = require("./../database/models/user_model");
+const jwt = require("jsonwebtoken");
 
 function loginForm(req, res) {
     res.render("authentication/login_form");
@@ -40,7 +41,14 @@ async function create(req, res, next) {
 
 function logout(req, res) {
     req.logout();
+    res.cookie("jwt", null, { maxAge: -1 });
     res.redirect("/");
+}
+
+function generateJWT(req, res) {
+    const token = jwt.sign({ sub: req.user._id }, process.env.JWT_SECRET);
+    res.cookie("jwt", token);
+    res.redirect("/dashboard");
 }
 
 module.exports = {
@@ -48,5 +56,6 @@ module.exports = {
     loginVerify,
     make,
     create,
-    logout
+    logout,
+    generateJWT
 }
