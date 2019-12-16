@@ -3,6 +3,11 @@ function index(req, res) {
     res.send(`Welcome you have viewed this page ${req.session.views} time(s)`);
 }
 
+function dashboard(req, res) {
+    res.send("Welcome to your dashboard");
+}
+
 module.exports = {
-    index
+    index,
+    dashboard
 }

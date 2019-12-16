@@ -4,7 +4,11 @@ function registerNew(req, res) {
     res.render("authentication/register");
 }
 
+function registerCreate(req, res) {
+
+}
 
 module.exports = {
-    registerNew
+    registerNew,
+    registerCreate
 }
