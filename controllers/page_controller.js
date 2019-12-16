@@ -6,8 +6,7 @@ function index(req, res) {
 }
 
 function dashboard(req, res) {
-    const views = StatService.getPageViews();
-    res.render("pages/dashboard", {user: req.session.user, views});
+    res.render("pages/dashboard", {user: req.session.user});
 }
 
 module.exports = {

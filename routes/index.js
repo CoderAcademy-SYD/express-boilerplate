@@ -18,4 +18,15 @@ router.post("/register", celebrate({
 
 router.get("/dashboard", authRedirect, PageController.dashboard);
 
+router.get("/login", AuthenticationContoller.loginNew);
+
+router.post("/login", celebrate({
+    [Segments.BODY]: {
+        email: Joi.string().required(),
+        password: Joi.string().required()
+    }
+}), AuthenticationContoller.loginCreate);
+
+router.get("/logout", AuthenticationContoller.logout);
+
 module.exports = router;
