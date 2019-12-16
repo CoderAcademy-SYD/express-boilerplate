@@ -2,6 +2,8 @@ const express = require("express");
 const exphbs = require("express-handlebars");
 const morgan = require("morgan");
 const expressSession = require("express-session");
+const MongoStore = require("connect-mongo")(expressSession);
+const mongoose = require("mongoose");
 const app = express();
 
 app.engine("handlebars", exphbs({defaultLayout: "main"}));
@@ -13,7 +15,8 @@ app.use(expressSession({
     saveUninitialized: false,
     cookie: {
         expires: 6000000
-    }
+    },
+    store: new MongoStore({ mongooseConnection: mongoose.connection })
 }));
 
 app.use(express.urlencoded({ extended: false }));
