@@ -17,7 +17,7 @@ router.post("/register", celebrate({
     }
 }), AuthenticationController.registerCreate);
 
-router.get("/dashboard", authRedirect, PageController.dashboard);
+router.get("/dashboard", passport.authenticate('jwt', {session: false}), PageController.dashboard);
 
 router.get("/login", AuthenticationController.loginNew);
 
@@ -27,9 +27,9 @@ router.post("/login", celebrate({
         password: Joi.string().required()
     }
 }), passport.authenticate("local", {
-    successRedirect: "/dashboard",
-    failureRedirect: "/login"
-}));
+    failureRedirect: "/login",
+    session: false
+}), AuthenticationController.loginCreate);
 
 router.get("/logout", AuthenticationController.logout);
 
