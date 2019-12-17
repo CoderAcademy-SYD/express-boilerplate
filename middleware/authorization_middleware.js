@@ -1,5 +1,5 @@
 function authRedirect(req, res, next) {
-    if(req.session && req.session.user) {
+    if(req.user) {
         return next();
     }
 
